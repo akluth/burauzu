@@ -4,6 +4,8 @@ use 5.006;
 use strict;
 use warnings FATAL => 'all';
 
+use Burauzu::MainWindow;
+
 =head1 NAME
 
 App::Burauzu - The great new App::Burauzu!
@@ -35,19 +37,18 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 start
 
 =cut
 
-sub function1 {
+sub start {
+    my $params = shift;
+
+    Burauzu::MainWindow::start;
 }
 
 =head2 function2
 
-=cut
-
-sub function2 {
-}
 
 =head1 AUTHOR
 
