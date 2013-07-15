@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 TARGET = Burauzu
 TEMPLATE = app
@@ -17,7 +17,7 @@ SOURCES += main.cpp\
 
 HEADERS  += burauzu.h
 
-FORMS    += burauzu.ui
+FORMS    +=
 
 OTHER_FILES += \
     .gitignore \

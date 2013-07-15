@@ -2,6 +2,11 @@
 #define BURAUZU_H
 
 #include <QMainWindow>
+#include <QHBoxLayout>
+#include <QWidgetAction>
+#include <QLineEdit>
+#include <QWebView>
+#include <QUrl>
 
 namespace Ui {
 class Burauzu;
@@ -14,12 +19,23 @@ class Burauzu : public QMainWindow
 public:
     explicit Burauzu(QWidget *parent = 0);
     ~Burauzu();
-    
+
 private slots:
-    void on_actionQuit_triggered();
+    void exitBurauzu();
 
 private:
-    Ui::Burauzu *ui;
+    void createActions();
+    void createMenu();
+
+private:
+    QHBoxLayout *layout;
+    QWebView *webView;
+
+private:
+    QMenu *burauzuMenu;
+    QAction *exitAction;
+    QLineEdit *url;
+    QWidgetAction *urlBar;
 };
 
 #endif // BURAUZU_H

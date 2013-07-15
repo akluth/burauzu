@@ -18,18 +18,45 @@
 #include "ui_burauzu.h"
 
 Burauzu::Burauzu(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::Burauzu)
+    QMainWindow(parent)
 {
-    ui->setupUi(this);
+    createActions();
+    createMenu();
+    this->setGeometry(0, 0, 800, 600);
+
+    webView = new QWebView(this);
+    webView->setGeometry(0, 20, 800, 530);
+    webView->load(QUrl("http://www.google.de"));
+
+    this->setCentralWidget(webView);
 }
+
 
 Burauzu::~Burauzu()
 {
-    delete ui;
 }
 
-void Burauzu::on_actionQuit_triggered()
+
+void Burauzu::exitBurauzu()
 {
-    qApp->quit();
+    qApp->exit();
+}
+
+
+void Burauzu::createActions()
+{
+    exitAction = new QAction(tr("Exit"), this);
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitBurauzu()));
+}
+
+
+void Burauzu::createMenu()
+{
+    url = new QLineEdit(this);
+    urlBar = new QWidgetAction(this);
+    urlBar->setDefaultWidget(url);
+
+    burauzuMenu = menuBar()->addMenu(tr("&Burauzu"));
+    burauzuMenu->addAction(exitAction);
+    menuBar()->addAction(urlBar);
 }
