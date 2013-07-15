@@ -20,4 +20,5 @@ HEADERS  += burauzu.h
 FORMS    += burauzu.ui
 
 OTHER_FILES += \
-    .gitignore
+    .gitignore \
+    README.md
