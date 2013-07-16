@@ -1,4 +1,4 @@
-/**
+/*
  *   This file is part of Burauzu (ブラウズ).
  *
  *   Burauzu is free software: you can redistribute it and/or modify
@@ -13,67 +13,76 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with Burauzu.  If not, see <http://www.gnu.org/licenses/>.
-**/
+ */
+
 #include "burauzu.h"
 
-Burauzu::Burauzu(QWidget *parent) :
-    QMainWindow(parent)
+#include <QApplication>
+#include <QBoxLayout>
+#include <QStatusBar>
+#include <QLineEdit>
+#include <QMenuBar>
+#include <QWebView>
+#include <QUrl>
+
+Burauzu::Burauzu (QWidget *parent)
+	: QWidget (parent)
 {
-    this->setGeometry(0, 0, 800, 600);
+	resize (800, 600);
 
-    main = new QVBoxLayout(this);
+	QVBoxLayout *main = new QVBoxLayout (this);
+	QHBoxLayout *header = new QHBoxLayout;
 
-    header = new QHBoxLayout;
-
-    menu = new QMenuBar(this);
-    web = new QWebView(this);
-    url = new QLineEdit(this);
+	this->m_menu = new QMenuBar;
+	this->m_web = new QWebView;
+	this->m_urlInput = new QLineEdit;
+	this->m_statusBar = new QStatusBar;
 
     main->addLayout(header);
-    main->addWidget(web);
+    main->addWidget(this->m_web);
+    main->addWidget(this->m_statusBar);
+	
+    header->addWidget(this->m_menu);
+    header->addWidget(this->m_urlInput, 2);
 
-    header->addWidget(menu);
-    header->addWidget(url, 2);
-
-    createActions();
     createMenu();
-    this->setMenuBar(menu);
-
-    web->load(QUrl("http://www.duckduckgo.com"));
-
-    this->setContentsMargins(0, 0, 0, 0);
+	
+    navigateToUrl(QUrl (QLatin1String ("http://www.duckduckgo.com")));
+	 
+    setContentsMargins(0, 0, 0, 0);
     main->setMargin(0);
-
-    statusBar()->showMessage(tr("Loading done."));
+	
+    this->m_statusBar->showMessage(tr("Loading done."));
 }
 
 
 Burauzu::~Burauzu()
 {
+	
 }
 
 
-void Burauzu::exitBurauzu()
+void Burauzu::navigateToUserInput ()
 {
-    qApp->exit();
+	navigateToUrl (QUrl::fromUserInput (this->m_urlInput->text ()));
 }
 
 
-void Burauzu::createActions()
+void Burauzu::navigateToUrl (const QUrl &url)
 {
-    exitAction = new QAction(tr("Exit"), this);
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitBurauzu()));
+	this->m_urlInput->setText (url.toString ());
+	
+	this->m_web->load (url);
 }
 
 
-void Burauzu::createMenu()
+void Burauzu::createMenu ()
 {
-    burauzuMenu = menu->addMenu(tr("&Burauzu"));
-    burauzuMenu->addAction(exitAction);
-    //menuBar()->addSeparator();
-
-    url->setPlaceholderText("URL");
-    //url->setMaximumWidth(200);
-    url->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    url->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+    m_burauzuMenu = m_menu->addMenu(tr("&Burauzu"));
+    m_burauzuMenu->addAction(tr("&Exit"), qApp, SLOT(quit()));
+	
+    m_urlInput->setPlaceholderText(tr("URL"));
+	m_urlInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+	
+    connect(this->m_urlInput, SIGNAL(returnPressed()), SLOT(navigateToUserInput()));
 }
