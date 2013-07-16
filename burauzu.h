@@ -4,6 +4,7 @@
 #include "webview.h"
 #include <QWidget>
 
+class QMessageLogger;
 class QTabWidget;
 class QStatusBar;
 class QLineEdit;
@@ -21,10 +22,11 @@ public:
 	
 public slots:
     void navigateToUserInput();
-    void navigateToUrl(const QUrl &url);
 	
 private:
     void createMenu();
+    WebView* createWebViewTab(QUrl url);
+    WebView* getCurrentWebViewTab();
 
     QList<WebView *> webViews;
 	

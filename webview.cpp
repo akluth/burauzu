@@ -15,18 +15,22 @@
  *   along with Burauzu.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "webview.h"
+#include <QWebView>
+#include <QVBoxLayout>
 
-WebView::WebView(QString url, QWidget *parent) :
+WebView::WebView(QUrl url, QWidget *parent) :
     QWidget(parent)
 {
     this->m_web = new QWebView;
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(this->m_web);
+
     this->m_web->load(url);
 }
 
 
 void WebView::navigateToUrl(const QUrl &url)
 {
-
-
     this->m_web->load(url);
 }

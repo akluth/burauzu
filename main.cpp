@@ -1,4 +1,4 @@
-#include "burauzu.hpp"
+#include "burauzu.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

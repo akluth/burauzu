@@ -10,7 +10,8 @@ class WebView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WebView(QString url, QWidget *parent = 0);
+    explicit WebView(QUrl url, QWidget *parent = 0);
+    void navigateToUrl(const QUrl &url);
     
 signals:
     

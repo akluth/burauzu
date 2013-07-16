@@ -18,6 +18,7 @@
 #include "webview.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QBoxLayout>
 #include <QTableWidget>
 #include <QStatusBar>
@@ -40,7 +41,8 @@ Burauzu::Burauzu (QWidget *parent)
 	this->m_statusBar = new QStatusBar;
     this->m_tabs = new QTabWidget;
 
-    this->m_tabs->addTab(webViews.append(new WebView(QString("http://www.duckduckgo.com")), tr("http://duckduckgo.com")));
+    this->m_tabs->addTab(createWebViewTab(QUrl("http://blog.fefe.de")), tr("blog.fefe.de"));
+    this->m_tabs->show();
 
     main->addLayout(header);
     main->addWidget(this->m_tabs);
@@ -50,8 +52,6 @@ Burauzu::Burauzu (QWidget *parent)
     header->addWidget(this->m_urlInput, 2);
 
     createMenu();
-	
-    navigateToUrl(QUrl(QLatin1String("http://www.duckduckgo.com")));
 	 
     setContentsMargins(0, 0, 0, 0);
     main->setMargin(0);
@@ -66,22 +66,30 @@ Burauzu::~Burauzu()
 }
 
 
-void Burauzu::createTab(url)
+WebView* Burauzu::createWebViewTab(QUrl url)
 {
-    webViews.append(new WebView(QString(url)));
-
+    webViews.append(new WebView(url));
+    return webViews.last();
 }
 
 
+WebView* Burauzu::getCurrentWebViewTab()
+{
+    qDebug() << "Current tab: " << this->m_tabs->currentIndex();
+    return webViews.value(this->m_tabs->currentIndex());
+}
+
 void Burauzu::navigateToUserInput()
 {
-    QUrl url = this->m_urlInput->text();
+    QString url = this->m_urlInput->text();
 
-    this->m_urlInput->setText(url.toString());
+    this->m_urlInput->setText(url);
 
+    qDebug() << getCurrentWebViewTab();
+    qDebug() << url;
 
-
-    navigateToUrl(QUrl::fromUserInput(url));
+    this->m_statusBar->showMessage("Loading...");
+    getCurrentWebViewTab()->navigateToUrl(QUrl::fromUserInput(url));
 }
 
 
