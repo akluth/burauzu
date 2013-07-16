@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        burauzu.cpp
+        burauzu.cpp \
+    webview.cpp
 
-HEADERS  += burauzu.h
+HEADERS  += burauzu.h \
+    webview.h
 
 FORMS    +=
 

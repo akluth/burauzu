@@ -1,8 +1,10 @@
 #ifndef BURAUZU_H
 #define BURAUZU_H
 
+#include "webview.h"
 #include <QWidget>
 
+class QTabWidget;
 class QStatusBar;
 class QLineEdit;
 class QMenuBar;
@@ -22,14 +24,15 @@ public slots:
     void navigateToUrl(const QUrl &url);
 	
 private:
-	void createMenu ();
+    void createMenu();
 
-	QWebView *m_web;
+    QList<WebView *> webViews;
 	
 	QMenuBar *m_menu;
 	QMenu *m_burauzuMenu;
 	QLineEdit *m_urlInput;
-	QStatusBar *m_statusBar;	
+    QStatusBar *m_statusBar;
+    QTabWidget *m_tabs;
 };
 
 #endif // BURAUZU_H
