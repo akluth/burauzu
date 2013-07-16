@@ -1,8 +1,12 @@
 #ifndef BURAUZU_H
 #define BURAUZU_H
 
+#include <QApplication>
 #include <QMainWindow>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QStatusBar>
+#include <QMenuBar>
 #include <QWidgetAction>
 #include <QLineEdit>
 #include <QWebView>
@@ -28,10 +32,12 @@ private:
     void createMenu();
 
 private:
-    QHBoxLayout *layout;
+    QHBoxLayout *menuBarLayout;
+    QVBoxLayout *layout;
     QWebView *webView;
 
 private:
+    QWidget *customMenuBar;
     QMenu *burauzuMenu;
     QAction *exitAction;
     QLineEdit *url;

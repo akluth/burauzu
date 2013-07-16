@@ -19,15 +19,35 @@
 Burauzu::Burauzu(QWidget *parent) :
     QMainWindow(parent)
 {
-    createActions();
-    createMenu();
     this->setGeometry(0, 0, 800, 600);
 
-    webView = new QWebView(this);
-    webView->setGeometry(0, 20, 800, 530);
-    webView->load(QUrl("http://www.google.de"));
+    header = new QWidget(this);
+    header->setMinimumSize(200, 50);
+    header->setSizePolicy(QSizePolicy::Expanding,
+                                 QSizePolicy::Expanding);
 
-    this->setCentralWidget(webView);
+    layout = new QVBoxLayout(this);
+    layout->setAlignment(Qt::AlignTop);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+
+    menuBarLayout = new QHBoxLayout;
+    menuBarLayout->setSpacing(5);
+    header->setLayout(menuBarLayout);
+
+    createActions();
+    createMenu();
+
+    layout->addWidget(header);
+
+    webView = new QWebView(this);
+    webView->setGeometry(0, 30, 800, 530);
+    webView->load(QUrl("http://www.duckduckgo.com"));
+
+    //this->setCentralWidget(webView);
+    layout->addWidget(webView);
+
+    statusBar()->showMessage(tr("Loading done."));
 }
 
 
@@ -51,11 +71,16 @@ void Burauzu::createActions()
 
 void Burauzu::createMenu()
 {
-    url = new QLineEdit(this);
-    urlBar = new QWidgetAction(this);
-    urlBar->setDefaultWidget(url);
-
     burauzuMenu = menuBar()->addMenu(tr("&Burauzu"));
     burauzuMenu->addAction(exitAction);
-    menuBar()->addAction(urlBar);
+    //menuBar()->addSeparator();
+
+    url = new QLineEdit(this);
+    url->setPlaceholderText("URL");
+    url->setMaximumWidth(200);
+    url->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    url->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
+
+    menuBarLayout->addWidget(menuBar());
+    menuBarLayout->addWidget(url);
 }
