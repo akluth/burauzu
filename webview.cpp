@@ -23,8 +23,9 @@ WebView::WebView(QUrl url, QWidget *parent) :
 {
     this->m_web = new QWebView;
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(this->m_web);
+    this->m_layout = new QVBoxLayout;
+    this->m_layout->addWidget(this->m_web);
+    setLayout(this->m_layout);
 
     this->m_web->load(url);
 }

@@ -41,7 +41,7 @@ Burauzu::Burauzu (QWidget *parent)
 	this->m_statusBar = new QStatusBar;
     this->m_tabs = new QTabWidget;
 
-    this->m_tabs->addTab(createWebViewTab(QUrl("http://blog.fefe.de")), tr("blog.fefe.de"));
+    this->m_tabs->addTab(createWebViewTab(QUrl("http://www.duckduckgo.com")), tr("DuckDuckGo"));
     this->m_tabs->show();
 
     main->addLayout(header);
@@ -85,11 +85,10 @@ void Burauzu::navigateToUserInput()
 
     this->m_urlInput->setText(url);
 
-    qDebug() << getCurrentWebViewTab();
-    qDebug() << url;
-
     this->m_statusBar->showMessage("Loading...");
     getCurrentWebViewTab()->navigateToUrl(QUrl::fromUserInput(url));
+    this->m_tabs->setTabText(this->m_tabs->currentIndex(), url);
+    this->m_statusBar->showMessage("Loading done.");
 }
 
 

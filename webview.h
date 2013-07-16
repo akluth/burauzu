@@ -5,6 +5,7 @@
 
 class QWebView;
 class QTabWidget;
+class QVBoxLayout;
 
 class WebView : public QWidget
 {
@@ -18,6 +19,7 @@ signals:
 public slots:
 
 private:
+    QVBoxLayout *m_layout;
     QWebView *m_web;
 };
 
