@@ -21,31 +21,28 @@ Burauzu::Burauzu(QWidget *parent) :
 {
     this->setGeometry(0, 0, 800, 600);
 
-    header = new QWidget(this);
-    header->setMinimumSize(200, 50);
-    header->setSizePolicy(QSizePolicy::Expanding,
-                                 QSizePolicy::Expanding);
+    main = new QVBoxLayout(this);
 
-    layout = new QVBoxLayout(this);
-    layout->setAlignment(Qt::AlignTop);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
+    header = new QHBoxLayout;
 
-    menuBarLayout = new QHBoxLayout;
-    menuBarLayout->setSpacing(5);
-    header->setLayout(menuBarLayout);
+    menu = new QMenuBar(this);
+    web = new QWebView(this);
+    url = new QLineEdit(this);
+
+    main->addLayout(header);
+    main->addWidget(web);
+
+    header->addWidget(menu);
+    header->addWidget(url, 2);
 
     createActions();
     createMenu();
+    this->setMenuBar(menu);
 
-    layout->addWidget(header);
+    web->load(QUrl("http://www.duckduckgo.com"));
 
-    webView = new QWebView(this);
-    webView->setGeometry(0, 30, 800, 530);
-    webView->load(QUrl("http://www.duckduckgo.com"));
-
-    //this->setCentralWidget(webView);
-    layout->addWidget(webView);
+    this->setContentsMargins(0, 0, 0, 0);
+    main->setMargin(0);
 
     statusBar()->showMessage(tr("Loading done."));
 }
@@ -71,16 +68,12 @@ void Burauzu::createActions()
 
 void Burauzu::createMenu()
 {
-    burauzuMenu = menuBar()->addMenu(tr("&Burauzu"));
+    burauzuMenu = menu->addMenu(tr("&Burauzu"));
     burauzuMenu->addAction(exitAction);
     //menuBar()->addSeparator();
 
-    url = new QLineEdit(this);
     url->setPlaceholderText("URL");
-    url->setMaximumWidth(200);
+    //url->setMaximumWidth(200);
     url->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     url->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-
-    menuBarLayout->addWidget(menuBar());
-    menuBarLayout->addWidget(url);
 }

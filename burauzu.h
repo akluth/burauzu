@@ -32,12 +32,12 @@ private:
     void createMenu();
 
 private:
-    QHBoxLayout *menuBarLayout;
-    QVBoxLayout *layout;
-    QWebView *webView;
+    QHBoxLayout *header;
+    QVBoxLayout *main;
+    QWebView *web;
 
 private:
-    QWidget *customMenuBar;
+    QMenuBar *menu;
     QMenu *burauzuMenu;
     QAction *exitAction;
     QLineEdit *url;
